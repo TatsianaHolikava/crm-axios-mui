@@ -1,17 +1,18 @@
 import "./Services.css";
 import Icon from "@mdi/react";
-import { mdiMenuOpen } from "@mdi/js";
+import { mdiMenu } from '@mdi/js';
 import Button from "@mui/material/Button";
 import EditJobModal from "./EditJobModal";
 import CreateJobModal from "./CreateJobModal";
 
+
 const Services = (props) => {
-  console.log(props.jobs);
+console.log(props.services)
   return (
     <div className="services-table">
       <div className="header">
         <h1>Services</h1>
-        <CreateJobModal />
+        <CreateJobModal createService={props.createService} services={props.services}/>
       </div>
       <table>
         <thead>
@@ -25,21 +26,21 @@ const Services = (props) => {
         </thead>
 
         <tbody>
-          {props.jobs.map((job) => (
-            <tr key={job.id}>
-              <td>{job.service.job}</td>
-              <td>{job.service.employee}</td>
-              <td>{job.service.price}</td>
-              <td>{job.service.primeCost}</td>
+          {props.services.map((service) => (
+            <tr key={service._id}>
+              <td>{service.job}</td>
+              <td>{service.employee}</td>
+              <td>{service.price}</td>
+              <td>{service.primeCost}</td>
               <td>
                 <div class="dropdown">
-                  <Icon path={mdiMenuOpen} size={1} />
+                <Icon path={mdiMenu} size={1} />
 
                   <div class="dropdown-content">
-                    <Button variant="outlined" sx={{ color: "red" }}>
+                    <Button variant="outlined" sx={{ color: "red" }} onClick={() => props.deleteService(service._id)}>
                       Del
                     </Button>
-                    <EditJobModal />
+                    <EditJobModal updateService={props.updateService} service={service}/>
                   </div>
                 </div>
               </td>

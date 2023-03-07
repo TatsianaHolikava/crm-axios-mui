@@ -17,17 +17,89 @@ function App() {
   const [services, setServices] = useState([]);
   const [result, setResults] = useState([]);
 
-  const getJobs = () => {
+  const getServices = () => {
     axios
-      .get("https://expressjs-server.vercel.app/orders")
+      .get("https://expressjs-server.vercel.app/services")
       .then((res) => {
-        setJobs(res.data);
+        setServices(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getClients = () => {
+    axios
+      .get("https://expressjs-server.vercel.app/clients")
+      .then((res) => {
+        setClients(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const createService = (jobObj) => {
+    axios
+      .post("https://expressjs-server.vercel.app/services", jobObj)
+      .then((res) => {
+        getServices();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const createClient = (jobObj) => {
+    axios
+      .post("https://expressjs-server.vercel.app/clients", jobObj)
+      .then((res) => {
+        getClients();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteService = (id) => {
+    axios
+      .delete(`https://expressjs-server.vercel.app/services/${id}`)
+      .then((res) => {
+        getServices(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteClient = (id) => {
+    axios
+      .delete(`https://expressjs-server.vercel.app/clients/${id}`)
+      .then((res) => {
+        getClients(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const updateService = (id, jobObj) => {
+    console.log("Updating job:", jobObj);
+    axios
+      .patch(`https://expressjs-server.vercel.app/services/${id}`, {
+        ...jobObj,
+      })
+      .then((res) => {
+        console.log("Service updated:", res.data);
+        getServices(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const updateClient = (id, jobObj) => {
+    console.log("Updating job:", jobObj);
+    axios
+      .patch(`https://expressjs-server.vercel.app/clients/${id}`, {
+        ...jobObj,
+      })
+      .then((res) => {
+        console.log("Service updated:", res.data);
+        getClients(res.data);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    getJobs();
+    getServices();
+    getClients();
   }, []);
 
   return (
@@ -38,13 +110,33 @@ function App() {
       <hr />
       <Navbar />
       <Routes>
-        <Route path="/orders" element={<Orders jobs={jobs} />} />
-        <Route path="/clients" element={<Clients jobs={jobs} />} />
-        <Route path="/services" element={<Services jobs={jobs} />} />
-        <Route path="/results" element={<Results jobs={jobs} />} />
-        <Route path="/" element={<Home jobs={jobs} />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route
+          path="/clients"
+          element={
+            <Clients
+              getClients={getClients}
+              createClient={createClient}
+              deleteClient={deleteClient}
+              updateClient={updateClient}
+              clients={clients}
+            />
+          }
+        />
+        <Route
+          path="/services"
+          element={
+            <Services
+              services={services}
+              createService={createService}
+              deleteService={deleteService}
+              updateService={updateService}
+            />
+          }
+        />
+        <Route path="/results" element={<Results />} />
+        <Route path="/" element={<Home />} />
       </Routes>
-      {/* <Services jobs={jobs} /> */}
     </div>
   );
 }
