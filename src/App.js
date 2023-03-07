@@ -44,6 +44,15 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  const createClient = (jobObj) => {
+    axios
+      .post("https://expressjs-server.vercel.app/clients", jobObj)
+      .then((res) => {
+        getClients();
+      })
+      .catch((err) => console.log(err));
+  };
+
   const deleteService = (id) => {
     axios
       .delete(`https://expressjs-server.vercel.app/services/${id}`)
@@ -53,21 +62,45 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  const deleteClient = (id) => {
+    axios
+      .delete(`https://expressjs-server.vercel.app/clients/${id}`)
+      .then((res) => {
+        getClients(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const updateService = (id, jobObj) => {
     console.log("Updating job:", jobObj);
     axios
-      .patch(`https://expressjs-server.vercel.app/services/${id}`, { ...jobObj })
+      .patch(`https://expressjs-server.vercel.app/services/${id}`, {
+        ...jobObj,
+      })
       .then((res) => {
         console.log("Service updated:", res.data);
         getServices(res.data);
       })
       .catch((err) => console.log(err));
   };
+
+  const updateClient = (id, jobObj) => {
+    console.log("Updating job:", jobObj);
+    axios
+      .patch(`https://expressjs-server.vercel.app/clients/${id}`, {
+        ...jobObj,
+      })
+      .then((res) => {
+        console.log("Service updated:", res.data);
+        getClients(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     getServices();
     getClients();
   }, []);
-
 
   return (
     <div className="App">
@@ -80,7 +113,15 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route
           path="/clients"
-          element={<Clients  clients={clients} />}
+          element={
+            <Clients
+              getClients={getClients}
+              createClient={createClient}
+              deleteClient={deleteClient}
+              updateClient={updateClient}
+              clients={clients}
+            />
+          }
         />
         <Route
           path="/services"
@@ -93,8 +134,8 @@ function App() {
             />
           }
         />
-        <Route path="/results" element={<Results  />} />
-        <Route path="/" element={<Home  />} />
+        <Route path="/results" element={<Results />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   );
