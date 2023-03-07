@@ -1,0 +1,35 @@
+.cards {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    margin-top: 80px;
+}
+.card {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.line {
+    height: 4px;
+    width: 100%;
+    margin-top:200px;
+    background: linear-gradient(to right, #f6f2f2, #010101 80%, transparent 80%, transparent 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    animation: running-line 4s ease-in-out infinite;
+  }
+  
+  @keyframes running-line {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
