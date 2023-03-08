@@ -17,6 +17,8 @@ function App() {
   const [services, setServices] = useState([]);
   const [result, setResults] = useState([]);
 
+
+  //GET SERVICES, CLIENTS, ORDERS
   const getServices = () => {
     axios
       .get("https://expressjs-server.vercel.app/services")
@@ -35,6 +37,16 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  const getOrders = () => {
+    axios
+      .get("https://expressjs-server.vercel.app/orders")
+      .then((res) => {
+        setOrders(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // CREATE SERVICE CLIENT, ORDER
   const createService = (jobObj) => {
     axios
       .post("https://expressjs-server.vercel.app/services", jobObj)
@@ -52,7 +64,16 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
+  const createOrder = (jobObj) => {
+    axios
+      .post("https://expressjs-server.vercel.app/orders", jobObj)
+      .then((res) => {
+        getOrders();
+      })
+      .catch((err) => console.log(err));
+  };
 
+  //DELETE SERVICE, CLIENT, ORDER
   const deleteService = (id) => {
     axios
       .delete(`https://expressjs-server.vercel.app/services/${id}`)
@@ -71,6 +92,16 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  const deleteOrder = (id) => {
+    axios
+      .delete(`https://expressjs-server.vercel.app/orders/${id}`)
+      .then((res) => {
+        getOrders(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //UPDATE SERVICE, CLIENT, ORDER
   const updateService = (id, jobObj) => {
     console.log("Updating job:", jobObj);
     axios
@@ -91,7 +122,20 @@ function App() {
         ...jobObj,
       })
       .then((res) => {
-        console.log("Service updated:", res.data);
+        console.log("Client updated:", res.data);
+        getClients(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const updateOrder = (id, jobObj) => {
+    console.log("Updating job:", jobObj);
+    axios
+      .patch(`https://expressjs-server.vercel.app/orders/${id}`, {
+        ...jobObj,
+      })
+      .then((res) => {
+        console.log("Order updated:", res.data);
         getClients(res.data);
       })
       .catch((err) => console.log(err));
@@ -100,6 +144,7 @@ function App() {
   useEffect(() => {
     getServices();
     getClients();
+    getOrders();
   }, []);
 
   return (
