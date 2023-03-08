@@ -3,13 +3,16 @@ import './Clients.css'
 import Icon from "@mdi/react";
 import { mdiMenu } from '@mdi/js';
 import Button from "@mui/material/Button";
+import EditClientModal from './EditClientModal'
+import CreateClientModal from './CreateClientModal'
+
 
 const Clients = (props) => {
     return (
-        <div className="services-table">
+        <div className="clients-table">
         <div className="header">
           <h1>Clients</h1>
-          {/* <CreateJobModal createService={props.createService} services={props.services}/> */}
+          <CreateClientModal createClient={props.createClient} clients={props.clients}/>
         </div>
         <table>
           <thead>
@@ -27,7 +30,7 @@ const Clients = (props) => {
               <tr key={client._id}>
                 <td>{client.name}</td>
                 <td>{client.address}</td>
-                <td>{client.phomeNumber}</td>
+                <td>{client.phoneNumber}</td>
                 <td>{client.createAt}</td>
                 <td>
                   <div class="dropdown">
@@ -37,7 +40,7 @@ const Clients = (props) => {
                       <Button variant="outlined" sx={{ color: "red" }} onClick={() => props.deleteClient(client._id)}>
                         Del
                       </Button>
-                      {/* <EditJobModal updateService={props.updateService} service={service}/> */}
+                      <EditClientModal updateClient={props.updateClient} client={client}/>
                     </div>
                   </div>
                 </td>
