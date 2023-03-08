@@ -23,21 +23,22 @@ export default function EditJobModal(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [updatedJob, setUpdatedJob] = useState(props.service.job)
-  const [updatedPrice, setUpdatedPrice] = useState(props.service.price)
-  const [updatedPrimeCost, setUpdatedPrimeCost] = useState(props.service.primeCost)
-  const [updatedEmployee, setUpdatedEmployee] = useState(props.service.employee)
+  const [updatedName, setUpdatedName] = useState(props.client.name)
+  const [updatedAddress, setUpdatedAddress] = useState(props.client.address)
+  const [updatedPhoneNumber, setUpdatedPhoneNumber] = useState(props.client.phoneNumber)
+  const [updatedCreateAt, setUpdatedCreateAt] = useState(props.client.createAt)
 
   
-  const editJob = (event) => {
+  const editClient = (event) => {
     event.preventDefault();
-    const jobObj = {
-      job: updatedJob,
-      employee: updatedEmployee,
-      price: updatedPrice,
-      primeCost: updatedPrimeCost
+    const clientObj = {
+      name: updatedName,
+      address: updatedAddress,
+      phoneNumber: updatedPhoneNumber,
+      createAt: updatedCreateAt,
+
     };
-    props.updateService(props.service._id, jobObj);
+    props.updateClient(props.client._id, clientObj);
     handleClose();
   };
 
@@ -58,34 +59,34 @@ export default function EditJobModal(props) {
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Job:"
+              label="Name:"
               variant="outlined"
-              value={updatedJob}
-              onChange={(e) => setUpdatedJob(e.target.value)}
+              value={updatedName}
+              onChange={(e) => setUpdatedName(e.target.value)}
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Employee:"
+              label="Address:"
               variant="outlined"
-              value={updatedEmployee}
-              onChange={(e) => setUpdatedEmployee(e.target.value)}
+              value={updatedAddress}
+              onChange={(e) => setUpdatedAddress(e.target.value)}
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Price:"
+              label="Phone Number:"
               variant="outlined"
-              value={updatedPrice}
-              onChange={(e) => setUpdatedPrice(e.target.value)}
+              value={updatedPhoneNumber}
+              onChange={(e) => setUpdatedPhoneNumber(e.target.value)}
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Price cost:"
               variant="outlined"
-              value={updatedPrimeCost}
-              onChange={(e) => setUpdatedPrimeCost(e.target.value)}
+              value={updatedCreateAt}
+              type="date"
+              onChange={(e) => setUpdatedCreateAt(e.target.value)}
             />
            
           </Typography>
@@ -102,7 +103,7 @@ export default function EditJobModal(props) {
             >
               Cancel
             </Button>
-            <Button variant="contained" type="submit" onClick={editJob}>
+            <Button variant="contained" type="submit" onClick={editClient}>
               Save changes
             </Button>
           </div>

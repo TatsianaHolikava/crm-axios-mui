@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import '../ModalWindow.css'
+import "../ModalWindow.css";
 
 const style = {
   position: "absolute",
@@ -18,32 +18,35 @@ const style = {
   p: 4,
 };
 
-export default function CreateJobModal(props) {
+export default function CreateClientModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [newJob, setNewJob] = useState("");
-  const [newEmployee, setNewEmployee] = useState("");
-  const [newPrice, setNewPrice] = useState("");
-  const [newPrimeCost, setNewPrimeCost] = useState("");
+  const [newName, setNewName] = useState("")
+  const [newAddress, setNewAddress] = useState("")
+  const [newPhoneNumber, setNewPhoneNumber] = useState("")
+  const [newCreateAt, setNewCreateAt] = useState("")
  
 
-  const addNewJob = () => {
-    const jobObj = {
-      job: newJob,
-      employee: newEmployee,
-      price: newPrice,
-      primeCost: newPrimeCost
+  const createClient = (event) => {
+    event.preventDefault();
+    const clientObj = {
+      name: newName,
+      address: newAddress,
+      phoneNumber: newPhoneNumber,
+      createAt: newCreateAt,
+
     };
-    props.createService(jobObj);
+    props.createClient(clientObj);
     handleClose();
   };
+
 
   return (
     <div>
       <Button variant="contained" onClick={handleOpen}>
-        Create Job
+        Create Client
       </Button>
       <Modal
         open={open}
@@ -53,37 +56,38 @@ export default function CreateJobModal(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create new service
+            Create new client
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Job:"
+              label="Name:"
               variant="outlined"
-              onChange={(e) => setNewJob(e.target.value)}
+              onChange={(e) => setNewName(e.target.value)}
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Employee:"
-              variant="outlined"
-              onChange={(e) => setNewEmployee(e.target.value)}
+              label="Address:"
+              variant="outlined" 
+              onChange={(e) => setNewAddress(e.target.value)}
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Price:"
+              label="Phone number:"
               variant="outlined"
-              onChange={(e) => setNewPrice(e.target.value)}
+              onChange={(e) => setNewPhoneNumber(e.target.value)}
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Price cost:"
-              variant="outlined"
-              onChange={(e) => setNewPrimeCost(e.target.value)}
+              variant="outlined"  
+              type="date"
+              onChange={(e) => setNewCreateAt(e.target.value)}
             />
+           
           </Typography>
           <div className="actions">
             <Button
@@ -98,8 +102,8 @@ export default function CreateJobModal(props) {
             >
               Cancel
             </Button>
-            <Button variant="contained" onClick={addNewJob}>
-              Create service
+            <Button variant="contained" onClick={createClient}>
+              Create client
             </Button>
           </div>
         </Box>
