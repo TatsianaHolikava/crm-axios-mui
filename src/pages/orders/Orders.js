@@ -1,19 +1,23 @@
 import React from "react";
 import Icon from "@mdi/react";
 import { mdiMenu } from "@mdi/js";
-import Button from "@mui/material/Button";
-import CreateOrderModal from './CreateOrderModal'
-import DeleteOrderModal from './DeleteOrderModal'
-import './Orders.css'
+import CreateOrderModal from "./CreateOrderModal";
+import DeleteOrderModal from "./DeleteOrderModal";
+import EditOrderModal from "./EditOrderModal";
+import "./Orders.css";
+import { mdiCheckCircle } from "@mdi/js";
 
 const Orders = (props) => {
   return (
     <div>
-   
       <div className="clients-table">
         <div className="header">
-        <h1>Orders</h1>
-           <CreateOrderModal /> 
+          <h1>Orders</h1>
+          <CreateOrderModal
+            createOrder={props.createOrder}
+            clients={props.clients}
+            services={props.services}
+          />
         </div>
         <table>
           <thead>
@@ -32,31 +36,70 @@ const Orders = (props) => {
           </thead>
 
           <tbody>
-            {/* {props.clients.map((client) => ( */}
-              <tr >
-                <td>1</td>
-                <td>John</td>
-                <td>cleaning</td>
-                <td>120</td>
-                <td>50</td>
-                <td>70</td>
-                <td>2023-03-08</td>
-                <td>In progress</td>
-                <td>2023-03-08</td>
+            {props.orders.map((order) => (
+              <tr>
+                <td>{order.orderNumber}</td>
+                <td>{order.clientName}</td>
+                <td>
+                  {order.service.job}
+                  <br />
+                  <i>Employee: {order.service.employee} </i>
+                </td>
+                <td>{order.service.price}</td>
+                <td>{order.paid.payment}</td>
+                <td>{order.paid.debt}</td>
+
+                <td>{order.service.createAt}</td>
+                <td className="statuses">
+                  <p className="status-todo">
+                    Not started:{" "}
+                    {order.sentToDo.status ? (
+                      <Icon path={mdiCheckCircle} size={0.75} color="black" />
+                    ) : null}
+                  </p>
+                  <p>
+                    In progress:{" "}
+                    {order.sentToDo.status ? (
+                      <Icon path={mdiCheckCircle} size={0.75} color="red" />
+                    ) : null}
+                  </p>
+                  <p>
+                    Job completed:{" "}
+                    {order.completed.status ? (
+                      <Icon path={mdiCheckCircle} size={0.75} color="blue" />
+                    ) : null}
+                  </p>
+                  <p>
+                    Customer received:{" "}
+                    {order.clientReceived.status ? (
+                      <Icon path={mdiCheckCircle} size={0.75} color="green" />
+                    ) : null}
+                  </p>
+                </td>
+                <td className="dates">
+                  <p>{order.service.createAt}</p>
+                  <p>{order.sentToDo.date}</p>
+                  <p>{order.completed.date}</p>
+                  <p>{order.clientReceived.date}</p>
+                </td>
                 <td>
                   <div class="dropdown">
                     <Icon path={mdiMenu} size={1} />
 
                     <div class="dropdown-content">
-                      <Button variant="outlined" sx={{ color: "red" }}>
-                       <DeleteOrderModal/>
-                      </Button>
-                      {/* <EditClientModal updateClient={props.updateClient} client={client}/> */}
+                      <DeleteOrderModal
+                        deleteOrder={props.deleteOrder}
+                        order={order}
+                      />
+                      <EditOrderModal
+                        updateOrder={props.updateorder}
+                        order={order}
+                      />
                     </div>
                   </div>
                 </td>
               </tr>
-            {/* ))} */}
+            ))}
           </tbody>
         </table>
       </div>
