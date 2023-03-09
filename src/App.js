@@ -17,7 +17,6 @@ function App() {
   const [services, setServices] = useState([]);
   const [result, setResults] = useState([]);
 
-
   //GET SERVICES, CLIENTS, ORDERS
   const getServices = () => {
     axios
@@ -155,7 +154,20 @@ function App() {
       <hr />
       <Navbar />
       <Routes>
-        <Route path="/orders" element={<Orders />} />
+        <Route
+          path="/orders"
+          element={
+            <Orders
+              getOrders={getOrders}
+              createOrder={createOrder}
+              deleteOrder={deleteOrder}
+              updateOrder={updateOrder}
+              orders={orders}
+              clients={clients}
+              services={services}
+            />
+          }
+        />
         <Route
           path="/clients"
           element={

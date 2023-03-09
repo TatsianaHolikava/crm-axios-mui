@@ -5,6 +5,10 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import "../ModalWindow.css";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const style = {
   position: "absolute",
@@ -23,30 +27,28 @@ export default function CreateClientModal(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [newName, setNewName] = useState("")
-  const [newAddress, setNewAddress] = useState("")
-  const [newPhoneNumber, setNewPhoneNumber] = useState("")
-  const [newCreateAt, setNewCreateAt] = useState("")
- 
+  const [newName, setNewName] = useState("");
+  const [newAddress, setNewAddress] = useState("");
+  const [newPhoneNumber, setNewPhoneNumber] = useState("");
+  const [newCreateAt, setNewCreateAt] = useState("");
 
-//   const createClient = (event) => {
-//     event.preventDefault();
-//     const clientObj = {
-//       name: newName,
-//       address: newAddress,
-//       phoneNumber: newPhoneNumber,
-//       createAt: newCreateAt,
+  //   const createClient = (event) => {
+  //     event.preventDefault();
+  //     const clientObj = {
+  //       name: newName,
+  //       address: newAddress,
+  //       phoneNumber: newPhoneNumber,
+  //       createAt: newCreateAt,
 
-//     };
-//     props.createClient(clientObj);
-//     handleClose();
-//   };
-
-
+  //     };
+  //     props.createClient(clientObj);
+  //     handleClose();
+  //   };
+console.log(props.services)
   return (
     <div>
       <Button variant="contained" onClick={handleOpen}>
-        Create Client
+        Create Order
       </Button>
       <Modal
         open={open}
@@ -56,38 +58,51 @@ export default function CreateClientModal(props) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create new client
+            Create new order
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Client Name</InputLabel>
+              <Select label="Client Name:">
+                {props.clients.map((client) => (
+                  <MenuItem value={client.name}>{client.name}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Service</InputLabel>
+              <Select label="Service:">
+                {props.services.map((service) => (
+                  <MenuItem value={service.job}>{service.job}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Name:"
+              label="Price:"
               variant="outlined"
-            
             />
-            <TextField
+                 <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              label="Address:"
-              variant="outlined" 
-            
-            />
-            <TextField
-              sx={{ marginTop: "5px", width: "300px" }}
-              id="outlined-basic"
-              label="Phone number:"
+              label="Payments:"
               variant="outlined"
-             
+            />
+                 <TextField
+              sx={{ marginTop: "5px", width: "300px" }}
+              id="outlined-basic"
+              label="Price:"
+              variant="outlined"
             />
             <TextField
               sx={{ marginTop: "5px", width: "300px" }}
               id="outlined-basic"
-              variant="outlined"  
-              type="date"
-            
+              variant="outlined"
+              type="text"
             />
-           
           </Typography>
           <div className="actions">
             <Button
@@ -102,9 +117,7 @@ export default function CreateClientModal(props) {
             >
               Cancel
             </Button>
-            <Button variant="contained" >
-              Create client
-            </Button>
+            <Button variant="contained">Create client</Button>
           </div>
         </Box>
       </Modal>

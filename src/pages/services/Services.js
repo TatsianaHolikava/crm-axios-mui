@@ -7,7 +7,7 @@ import CreateJobModal from "./CreateJobModal";
 
 
 const Services = (props) => {
-console.log(props.services)
+
   return (
     <div className="services-table">
       <div className="header">
